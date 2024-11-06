@@ -70,7 +70,7 @@ def stat_fq(fqstat,outdict,fqtype):
 				elif fqtype == 'SE':
 					G_number = int(info[4])
 			if 'Number of filtered reads' in line:
-				filter_rate = line.split('(')[2].split(')')[0].strip()
+				filter_rate = line.split('(')[1].split(')')[0].strip()
 				outdict['filter_rate'] = filter_rate
 				outdict['clean_rate'] = str('%.2f'%(100 - float(filter_rate.strip('%'))))+'%'
 			if 'Q20 number' in line:
