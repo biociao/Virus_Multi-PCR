@@ -139,13 +139,13 @@ def bwaaln(script,barcode,fqtype,read_len):
 	max_diff_seed = int(int(seed_len)/16)
 	if fqtype == 'SE':
 		cleanfq = Clean_dir + '/Clean_' + barcode + '.fq.gz'
-		script.write("%(bwa)s aln -l %(seed_len)s -k %(max_diff_seed)s -t 3 -f %(Align_dir)s/%(barcode)s.sai %(database)s/nCoV.fa %(cleanfq)s && %(bwa)s samse -r \"@RG\\tID:PE100\\tPL:MGISEQ\\tPU:PE100\\tLB:mutPCR\\tSM:%(barcode)s\\tCN:BGI\" %(database)s/nCoV.fa %(Align_dir)s/%(barcode)s.sai %(cleanfq)s | %(samtools)s view -b - | %(samtools)s sort -T %(Align_dir)s/%(barcode)s.sort -o %(Align_dir)s/%(barcode)s.sort.bam - && rm %(Align_dir)s/%(barcode)s.sai\n" \
+		script.write("%(bwa)s aln -l %(seed_len)s -k %(max_diff_seed)s -t 3 -f %(Align_dir)s/%(barcode)s.sai %(database)s/%(reftag)s.fa %(cleanfq)s && %(bwa)s samse -r \"@RG\\tID:PE100\\tPL:MGISEQ\\tPU:PE100\\tLB:mutPCR\\tSM:%(barcode)s\\tCN:BGI\" %(database)s/%(reftag)s.fa %(Align_dir)s/%(barcode)s.sai %(cleanfq)s | %(samtools)s view -b - | %(samtools)s sort -T %(Align_dir)s/%(barcode)s.sort -o %(Align_dir)s/%(barcode)s.sort.bam - && rm %(Align_dir)s/%(barcode)s.sai\n" \
 			%{'bwa':bwa,'samtools':samtools,'database':database,'cleanfq':cleanfq,'Align_dir':Align_dir,'barcode':barcode,'seed_len':seed_len,'max_diff_seed':max_diff_seed})
 		script.write("%(samtools)s index %(Align_dir)s/%(barcode)s.sort.bam \n" %{'samtools':samtools,'Align_dir':Align_dir,'barcode':barcode})
 	elif fqtype == 'PE':
 		cleanfq1 = Clean_dir + '/Clean_' + barcode + '_1.fq.gz'
 		cleanfq2 = Clean_dir + '/Clean_' + barcode + '_2.fq.gz'
-		script.write("%(bwa)s aln -l %(seed_len)s -k %(max_diff_seed)s -t 3 -f %(Align_dir)s/%(barcode)s_1.sai %(database)s/nCoV.fa %(cleanfq1)s && %(bwa)s aln -l %(seed_len)s -k %(max_diff_seed)s -t 3 -f %(Align_dir)s/%(barcode)s_2.sai %(database)s/nCoV.fa %(cleanfq2)s && %(bwa)s sampe -a 1000 -r \"@RG\\tID:PE100\\tPL:MGISEQ\\tPU:PE100\\tLB:mutPCR\\tSM:%(barcode)s\\tCN:BGI\" %(database)s/nCoV.fa %(Align_dir)s/%(barcode)s_1.sai %(Align_dir)s/%(barcode)s_2.sai %(cleanfq1)s %(cleanfq2)s | %(samtools)s view -b - | %(samtools)s sort -T %(Align_dir)s/%(barcode)s.sort -o %(Align_dir)s/%(barcode)s.sort.bam - && rm %(Align_dir)s/%(barcode)s_1.sai %(Align_dir)s/%(barcode)s_2.sai\n" \
+		script.write("%(bwa)s aln -l %(seed_len)s -k %(max_diff_seed)s -t 3 -f %(Align_dir)s/%(barcode)s_1.sai %(database)s/%(reftag)s.fa %(cleanfq1)s && %(bwa)s aln -l %(seed_len)s -k %(max_diff_seed)s -t 3 -f %(Align_dir)s/%(barcode)s_2.sai %(database)s/%(reftag)s.fa %(cleanfq2)s && %(bwa)s sampe -a 1000 -r \"@RG\\tID:PE100\\tPL:MGISEQ\\tPU:PE100\\tLB:mutPCR\\tSM:%(barcode)s\\tCN:BGI\" %(database)s/%(reftag)s.fa %(Align_dir)s/%(barcode)s_1.sai %(Align_dir)s/%(barcode)s_2.sai %(cleanfq1)s %(cleanfq2)s | %(samtools)s view -b - | %(samtools)s sort -T %(Align_dir)s/%(barcode)s.sort -o %(Align_dir)s/%(barcode)s.sort.bam - && rm %(Align_dir)s/%(barcode)s_1.sai %(Align_dir)s/%(barcode)s_2.sai\n" \
 			%{'bwa':bwa,'samtools':samtools,'database':database,'cleanfq1':cleanfq1,'cleanfq2':cleanfq2,'Align_dir':Align_dir,'barcode':barcode,'seed_len':seed_len,'max_diff_seed':max_diff_seed})
 		script.write("%(samtools)s index %(Align_dir)s/%(barcode)s.sort.bam \n" %{'samtools':samtools,'Align_dir':Align_dir,'barcode':barcode})
 	return
@@ -157,14 +157,14 @@ def bwamem(script,barcode,fqtype):
 	create_dirs(Align_dir)
 	if fqtype == 'SE':
 		cleanfq = Clean_dir + '/Clean_' + barcode + '.fq.gz'
-		script.write("%(bwa)s mem -M -R \"@RG\\tID:%(barcode)s\\tPL:MGISEQ\\tLB:mutPCR\\tSM:%(barcode)s\" -t 1 %(database)s/nCoV.fa %(cleanfq)s | %(samtools)s view -b - | %(samtools)s sort -T %(Align_dir)s/%(barcode)s.sort -o %(Align_dir)s/%(barcode)s.sort.bam -\n"\
-			%{'bwa':bwa,'samtools':samtools,'database':database,'cleanfq':cleanfq,'Align_dir':Align_dir,'barcode':barcode})
+		script.write("%(bwa)s mem -M -R \"@RG\\tID:%(barcode)s\\tPL:MGISEQ\\tLB:mutPCR\\tSM:%(barcode)s\" -t 1 %(database)s/%(reftag)s.fa %(cleanfq)s | %(samtools)s view -b - | %(samtools)s sort -T %(Align_dir)s/%(barcode)s.sort -o %(Align_dir)s/%(barcode)s.sort.bam -\n"\
+			%{'reftag':reftag,'bwa':bwa,'samtools':samtools,'database':database,'cleanfq':cleanfq,'Align_dir':Align_dir,'barcode':barcode})
 		script.write("%(samtools)s index %(Align_dir)s/%(barcode)s.sort.bam \n" %{'samtools':samtools,'Align_dir':Align_dir,'barcode':barcode})
 	elif fqtype == 'PE':
 		cleanfq1 = Clean_dir + '/Clean_' + barcode + '_1.fq.gz'
 		cleanfq2 = Clean_dir + '/Clean_' + barcode + '_2.fq.gz'
-		script.write("%(bwa)s mem -M -R \"@RG\\tID:%(barcode)s\\tPL:MGISEQ\\tLB:mutPCR\\tSM:%(barcode)s\" -t 1 %(database)s/nCoV.fa %(cleanfq1)s %(cleanfq2)s | %(samtools)s view -b - | %(samtools)s sort -T %(Align_dir)s/%(barcode)s.sort -o %(Align_dir)s/%(barcode)s.sort.bam -\n"\
-			%{'bwa':bwa,'samtools':samtools,'database':database,'cleanfq1':cleanfq1,'cleanfq2':cleanfq2,'Align_dir':Align_dir,'barcode':barcode})
+		script.write("%(bwa)s mem -M -R \"@RG\\tID:%(barcode)s\\tPL:MGISEQ\\tLB:mutPCR\\tSM:%(barcode)s\" -t 1 %(database)s/%(reftag)s.fa %(cleanfq1)s %(cleanfq2)s | %(samtools)s view -b - | %(samtools)s sort -T %(Align_dir)s/%(barcode)s.sort -o %(Align_dir)s/%(barcode)s.sort.bam -\n"\
+			%{'reftag':reftag,'bwa':bwa,'samtools':samtools,'database':database,'cleanfq1':cleanfq1,'cleanfq2':cleanfq2,'Align_dir':Align_dir,'barcode':barcode})
 		script.write("%(samtools)s index %(Align_dir)s/%(barcode)s.sort.bam \n" %{'samtools':samtools,'Align_dir':Align_dir,'barcode':barcode})
 	else:
 		fqtype_error()
@@ -322,6 +322,8 @@ if __name__ == '__main__':
 
 	fqtype_p = jsonobj["FqType"]
 	fqtype = fqtype_p[0:2]
+ 
+	reftag = jsonobj["RefTag"]
 
 	# tools
 	try:
@@ -382,11 +384,11 @@ if __name__ == '__main__':
 
 	#read_len = fqtype_p[2:]
 	barcode_file = jsonobj["sample_list"]
-	virusbed = database + '/nCoV.virus.bed'
-	virusbed_cutprimer = database + '/nCoV.virus.cutprimer.bed'
-	lambdabed = database + '/nCoV.lambda.bed'
-	GAPDH_bed = database + '/nCoV.GAPDH.bed'
-	variantbed = database + '/nCoV.variant.bed'
+	virusbed = database + '/' + reftag + '.virus.bed'
+	virusbed_cutprimer = database + '/' + reftag + '.virus.cutprimer.bed'
+	lambdabed = database + '/lambda.bed'
+	GAPDH_bed = database + '/GAPDH.bed'
+	variantbed = database + '/' + reftag + '.variant.bed'
 	bed2 = database + '/wuhanRef.bed'
 	ref = database + '/nCov.fasta'
 	watchdog = bin+'/localsubmit/bin/watchDog_v1.0.pl'
@@ -402,8 +404,8 @@ if __name__ == '__main__':
 		primer_version = jsonobj["primer_version"]
 	except:
 		primer_version = '2.0'
-	#primer_list = database + '/nCoV.primer.xls'
-	primer_list = '%s/nCoV.primer.%s.xls'%(database,primer_version)
+	primer_list = database + '/' + reftag + '.primer.xls'
+	#primer_list = '%s/nCoV.primer.%s.xls'%(database,primer_version)
 	try:
 		SplitData = jsonobj["SplitData"]
 	except:
