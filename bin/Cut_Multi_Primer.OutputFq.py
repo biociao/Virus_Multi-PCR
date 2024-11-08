@@ -168,7 +168,7 @@ if __name__ == '__main__':
 
 	file_inbam.close()
 	file_log = open(log,'w')
-	file_log.write('Fraction of invalid reads: '+str('%.3f'%(100*a/n))+'%\n')
+	file_log.write('Fraction of invalid reads: ' + ('NA' if n == 0 else '%.3f' % (100 * a / n)) + '%\n')
 	file_log.close()
 
 	if FqType == 'PE':
