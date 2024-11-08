@@ -49,7 +49,7 @@ Other required softwares:
 
 To clone the repository:
 
-    git clone https://github.com/MGI-tech-bioinformatics/SARS-CoV-2_Multi-PCR_v1.0.git
+    git clone git@github.com:biociao/Virus_Multi-PCR.git
 
 To install the required software by conda (recommanded):
 ```bash
