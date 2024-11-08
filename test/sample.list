@@ -1,2 +1,2 @@
-Sample1	CRR786494	/d/repo/BGI/PATK/patk/workflows/ATOPlex/SARS-CoV-2_Multi-PCR_v1.0/test/input
-Sample2 CRR786495	/d/repo/BGI/PATK/patk/workflows/ATOPlex/SARS-CoV-2_Multi-PCR_v1.0/test/input
+Sample1	seq_basename1	/path/to/dir/
+Sample2 seq_basename2	/path/to/dir/
