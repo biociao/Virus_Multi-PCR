@@ -9,9 +9,9 @@ This pipeline could accurately and efficiently identify **target virus** reads f
 ## Latest Updates:
 Nov 8, 2024
 1. Add `reftag` parameter in `input.json` to support any kind of virus.
-2. So the project renamed as `Virus Multi-PCR`.
-3. Current databse is build for Marburg marburgvirus.
-4. Move the original databae for SARS-CoV-2 to branch `nCoV`.
+2. So the project is renamed as `Virus Multi-PCR`.
+3. Current databse is built for Marburg marburgvirus.
+4. The original function for SARS-CoV-2 was moved to branch `nCoV`.
 5. Minor bugs fixed.  
 
 
