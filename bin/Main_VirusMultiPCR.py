@@ -389,8 +389,8 @@ if __name__ == '__main__':
 	lambdabed = database + '/lambda.bed'
 	GAPDH_bed = database + '/GAPDH.bed'
 	variantbed = database + '/' + reftag + '.variant.bed'
-	bed2 = database + '/wuhanRef.bed'
-	ref = database + '/nCov.fasta'
+	bed2 = database + '/MARV.bed'
+	ref = database + '/MARV.fasta'
 	watchdog = bin+'/localsubmit/bin/watchDog_v1.0.pl'
 	qsubsge = rootpath+'/bin/qsub-sge.pl'
 	try:
