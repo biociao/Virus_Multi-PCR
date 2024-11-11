@@ -1,1 +1,1 @@
-python3 ../bin/Main_SARS-CoV-2.py -i input.json
+python3 ../bin/Main_VirusMultiPCR.py -i input.json
