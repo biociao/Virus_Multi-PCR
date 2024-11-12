@@ -141,7 +141,7 @@ if __name__ == '__main__':
 
 		if r.is_secondary:
 			continue
-		if chrn != 'MN908947.3' and n > 1:
+		if chrn != 'NC_001608.3' and n > 1:
 			continue
 		else:
 			n += 1
